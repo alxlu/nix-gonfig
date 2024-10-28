@@ -11,6 +11,7 @@
 
   outputs = inputs@{ self, nix-darwin, nixpkgs, home-manager }:
     let
+      #dwmTmux = import ./dwm-tmux.nix;
       configuration = { pkgs, ... }: {
         # List packages installed in system profile. To search by name, run:
         # $ nix-env -qaP | grep wget
@@ -19,6 +20,7 @@
           jack2
           jack-example-tools
           nixpkgs-fmt
+          (callPackage ./dwm-tmux.nix { })
         ];
 
         # Auto upgrade nix package and the daemon service.
