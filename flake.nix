@@ -41,6 +41,7 @@
 
         system.defaults = {
           screensaver.askForPasswordDelay = 10;
+          dock.autohide = true;
         };
 
         # The platform the configuration will be used on.

@@ -16,6 +16,12 @@
   # changes in each release.
   home.stateVersion = "24.05";
 
-  # Let Home Manager install and manage itself.
-  programs.home-manager.enable = true;
+  # installed to /etc/profiles/per-user/<user>/
+  home.packages = [
+    pkgs.vim
+    pkgs.home-manager
+  ];
+
+    # Let Home Manager install and manage itself.
+    programs.home-manager.enable = true;
 }
