@@ -24,6 +24,7 @@ in
     tmux
     vim
     dwmTmux
+    swiftbar
   ];
   home.file.".config/tmux/workspaces.tmux" = {
     source = ./tmux/workspaces.tmux;
@@ -38,6 +39,15 @@ in
     ${builtins.readFile ./tmux/style.conf}
     ${builtins.readFile ./tmux/bindings.conf}
     '';
+  };
+
+  programs.zsh = {
+    enable = true;
+    dotDir = ".config/zsh";
+    # enableAutosuggestions = true;
+    # enableCompletion = true;
+    # syntaxHilighting = { enable = true; };
+    initExtra = builtins.readFile ./zsh/zshrc;
   };
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;

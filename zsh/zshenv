@@ -1,0 +1,11 @@
+export PATH=/etc/profiles/per-user/alex/bin:/sbin:$HOME/bin:$HOME/.local/bin:$HOME/go/bin:/usr/local/bin:/snap/bin:$PATH:/Users/alex/Library/Python/3.8/bin:
+export CDPATH=$HOME
+
+export EDITOR='nvim'
+export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_CACHE_HOME="$HOME/.cache"
+export ZDOTDIR="${XDG_CONFIG_HOME:-$HOME/.config}/zsh"
+
+export WORK_PROXY_ADDR="192.168.17.12"
+export WORK_PROXY="$WORK_PROXY_ADDR:1080"
+export WORK_PROXY_SOCKS5="$WORK_PROXY_ADDR:1081"
