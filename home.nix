@@ -2,6 +2,7 @@
 let
   # Define dwm-tmux as a package once
   dwmTmux = pkgs.callPackage ./dwm-tmux.nix { };
+  zeit = pkgs.callPackage ./zeit.nix { };
 in
 {
   # Home Manager needs a bit of information about you and the
@@ -27,6 +28,7 @@ in
     vim
     dwmTmux
     swiftbar
+    zeit
   ];
   home.file.".config/tmux/workspaces.tmux" = {
     source = ./tmux/workspaces.tmux;
