@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 let
   # Define dwm-tmux as a package once
   dwmTmux = pkgs.callPackage ./dwm-tmux.nix { };
@@ -29,20 +29,27 @@ in
     dwmTmux
     swiftbar
     zeit
+    kubectl
   ];
-  home.file.".config/tmux/workspaces.tmux" = {
+
+  xdg.enable = true;
+
+  xdg.configFile."tmux/tmux.conf".source = ./tmux/tmux.conf;
+  xdg.configFile."tmux/dwm.tmux".source = "${dwmTmux}/lib/dwm.tmux";
+  xdg.configFile."tmux/style.conf".source = ./tmux/style.conf;
+  xdg.configFile."tmux/bindings.conf".source = ./tmux/bindings.conf;
+  xdg.configFile."tmux/workspaces.tmux" = {
     source = ./tmux/workspaces.tmux;
     executable = true;
   };
 
+  home.sessionVariables = {
+    TMUX_PLUGIN_MANAGER_PATH = "${config.home.homeDirectory}/.local/share/tmux/plugins";
+    XDG_CONFIG_HOME = lib.mkDefault "${config.home.homeDirectory}/.config";
+  };
+
   programs.tmux = {
     enable = true;
-    extraConfig = ''
-    ${builtins.readFile ./tmux/tmux.conf}
-    source ${dwmTmux}/lib/dwm.tmux
-    ${builtins.readFile ./tmux/style.conf}
-    ${builtins.readFile ./tmux/bindings.conf}
-    '';
   };
 
   programs.zsh = {
