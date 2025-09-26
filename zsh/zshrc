@@ -152,3 +152,28 @@ op_plugins() {
 
 zsh-defer op_plugins
 
+# ~/.zshrc
+
+# Function to set Ghostty background color
+set_bg() {
+  # $1 = hex color
+  printf '\033]11;%s\007' "$1"
+}
+
+# Function to set Ghostty cursor color
+set_cursor() {
+  # $1 = hex color
+  printf '\033]12;%s\007' "$1"
+}
+
+# Detect SSH connection
+if [[ -n "$SSH_CONNECTION" ]]; then
+  case "$HOST" in
+    work)
+      # White background
+      set_bg "#ffffff"
+      # Dark grey cursor
+      set_cursor "#333333"
+      ;;
+  esac
+fi
