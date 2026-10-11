@@ -1,20 +1,31 @@
-{ stdenv
-}:
+{ lib, stdenvNoCC, fetchFromGitHub, makeWrapper, tmux }:
 
-stdenv.mkDerivation {
+stdenvNoCC.mkDerivation {
   pname = "dwm.tmux";
-  version = "v0.5";
+  version = "unstable-2026-10-11";
 
-  src = fetchTarball {
-    url = "https://github.com/alxlu/dwm.tmux/releases/download/0.1.1/dwm.tmux.tar.gz";
-    sha256 = "0hhwwx6zjkjvz762fvjv9f9rb9bj275ny3dsw434si87hm7cifcc";
+  src = fetchFromGitHub {
+    owner = "alxlu";
+    repo = "dwm.tmux";
+    rev = "96e60ea5d07c6c6aa81c7220e50b27019bfc1481";
+    hash = "sha256-puf9xQDYm+9DFmoLxttfpxjtM10TszQ99FnRRdGVCME=";
   };
 
-  buildPhase = ''
-    make PREFIX=$out BINDIR=$out/bin LIBDIR=$out/lib
+  dontBuild = true;
+  nativeBuildInputs = [ makeWrapper ];
+  installFlags = [ "PREFIX=$(out)" ];
+
+  postInstall = ''
+    wrapProgram "$out/share/dwm.tmux/dwm.tmux" \
+      --prefix PATH : ${lib.makeBinPath [ tmux ]}
+    wrapProgram "$out/share/dwm.tmux/bin/dwm.tmux" \
+      --prefix PATH : ${lib.makeBinPath [ tmux ]}
   '';
 
-  installPhase = ''
-    make PREFIX=$out BINDIR=$out/bin LIBDIR=$out/lib install
-  '';
+  meta = {
+    description = "dwm-inspired tiling pane management for tmux";
+    homepage = "https://github.com/alxlu/dwm.tmux";
+    mainProgram = "dwm.tmux";
+    platforms = lib.platforms.unix;
+  };
 }

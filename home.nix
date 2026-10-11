@@ -35,7 +35,12 @@ in
   xdg.enable = true;
 
   xdg.configFile."tmux/tmux.conf".source = ./tmux/tmux.conf;
-  xdg.configFile."tmux/dwm.tmux".source = "${dwmTmux}/lib/dwm.tmux";
+  xdg.configFile."tmux/dwm.tmux".text = ''
+    set -g @dwm-bindings both
+    set -g @dwm-kill-last off
+    set -g @dwm-step 3
+    run-shell "${dwmTmux}/share/dwm.tmux/dwm.tmux"
+  '';
   xdg.configFile."tmux/style.conf".source = ./tmux/style.conf;
   xdg.configFile."tmux/bindings.conf".source = ./tmux/bindings.conf;
   xdg.configFile."tmux/workspaces.tmux" = {
